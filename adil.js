@@ -1,3 +1,40 @@
+// Initialize EmailJS
+emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+
+// Handle contact form submission
+document.addEventListener('DOMContentLoaded', function() {
+  const contactForm = document.getElementById('contact-form');
+  
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form values
+      const userName = document.querySelector('input[name="user_name"]').value;
+      const userEmail = document.querySelector('input[name="user_email"]').value;
+      const message = document.querySelector('textarea[name="message"]').value;
+      
+      // Prepare template parameters
+      const templateParams = {
+        to_email: 'adilkhanmb@gmail.com',
+        from_name: userName,
+        from_email: userEmail,
+        message: message
+      };
+      
+      // Send email
+      emailjs.send('service_09bc1ap', 'YOUR_TEMPLATE_ID', templateParams)
+        .then(function(response) {
+          alert('Message sent successfully! I will get back to you soon.');
+          contactForm.reset();
+        }, function(error) {
+          alert('Failed to send message. Please try again later.');
+          console.error('EmailJS error:', error);
+        });
+    });
+  }
+});
+
 const navLinks = document.querySelectorAll('.ul-list li a');
 const sections = document.querySelectorAll('section');
 
@@ -49,7 +86,7 @@ window.addEventListener('scroll', () => {
   });
 });
 
-const revealElements = document.querySelectorAll('.home-container, .about-container, .projects-container, .services-container, .contact-content');
+const revealElements = document.querySelectorAll('.home-container, .about-container, .projects-container, .contact-content');
 revealElements.forEach(el => el.classList.add('reveal'));
 
 const backToTop = document.createElement('div');
@@ -81,7 +118,7 @@ backToTop.addEventListener('click', () => {
 backToTop.addEventListener('mouseover', () => backToTop.style.transform = 'scale(1.2)');
 backToTop.addEventListener('mouseout', () => backToTop.style.transform = 'scale(1)');
 
-const cards = document.querySelectorAll('.project-card, .c1, .service-card');
+const cards = document.querySelectorAll('.project-card, .c1');
 cards.forEach(card => {
   card.addEventListener('mouseenter', () => card.style.transform = 'translateY(-8px) scale(1.05)');
   card.addEventListener('mouseleave', () => card.style.transform = 'translateY(0) scale(1)');
@@ -92,13 +129,13 @@ const words = ["Frontend Developer", "UI/UX Designer", "Web Enthusiast", "React 
 let wordIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
-let typingSpeed = 100;
+let typingSpeed = 80;
 
 function type() {
     const currentWord = words[wordIndex];
     let displayedText = currentWord.substring(0, charIndex);
     
-    typingElement.innerHTML = displayedText + '<span class="cursor">|</span>';
+    typingElement.textContent = displayedText;
 
     if (!isDeleting && charIndex < currentWord.length) {
         charIndex++;
@@ -115,33 +152,7 @@ function type() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', type);
+if (typingElement) {
+  document.addEventListener('DOMContentLoaded', type);
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-  const loadingText = document.getElementById("loading-text");
-  const mainIcon = document.querySelector(".main-icon");
-  const subIcons = document.querySelectorAll(".sub-icons i");
-  const designerText = document.getElementById("designer-text");
-  const mainPage = document.getElementById("main-page");
-  const loadingScreen = document.getElementById("loading-screen");
-
-  function showElement(element, delay=0){
-    setTimeout(() => {
-      element.classList.remove("hidden");
-      element.classList.add("fall");
-    }, delay);
-  }
-
-  showElement(loadingText, 0);          
-  showElement(mainIcon, 800);         
-  subIcons.forEach((icon, idx) => {
-    showElement(icon, 1600 + idx*400);  
-  });
-  showElement(designerText, 2800);    
-
-  setTimeout(() => {
-    loadingScreen.style.opacity = '0';
-    setTimeout(() => loadingScreen.style.display='none', 500);
-    mainPage.classList.add("visible");
-  }, 4000);
-});
