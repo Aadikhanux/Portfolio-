@@ -39,4 +39,4 @@ GitHub: GitHub
 Instagram: Instagram
 Made with ❤️ by Adil Khan
 
-git clone https://github.com/Saboo24/portfolio-showcase.git
+
